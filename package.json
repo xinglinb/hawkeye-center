@@ -3,7 +3,7 @@
   "scripts": {
     "start": "roadhog server",
     "build": "roadhog build",
-    "dev": "set COMPRESS=none&&roadhog build"
+    "dev": "set COMPRESS=none&&roadhog server"
   },
   "dependencies": {
     "dva": "^2.4.1",
