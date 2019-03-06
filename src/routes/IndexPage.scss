@@ -1,14 +1,8 @@
 
-.normal {
-  font-family: Georgia, sans-serif;
-  margin-top: 3em;
-  text-align: center;
-}
-
 .title {
-  font-size: 2.5rem;
-  font-weight: normal;
   letter-spacing: -1px;
+  font-weight: normal;
+  font-size: 2.5rem;
 }
 
 .welcome {
@@ -18,9 +12,9 @@
 }
 
 .list {
-  font-size: 1.2em;
   margin-top: 1.8em;
   list-style: none;
+  font-size: 1.2em;
   line-height: 1.5em;
 }
 

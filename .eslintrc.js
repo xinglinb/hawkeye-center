@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-  extends: ['eslint-config-ali'],
+  extends: ['eslint-config-ali/react'],
   'parser': 'babel-eslint',
   'rules': {
     'react/no-array-index-key': [0],
@@ -11,7 +11,9 @@ module.exports = {
     'react/forbid-prop-types': [0],
     'no-script-url': [0],
     'no-loop-func': [0],
-    'import/no-unresolved': [2, { ignore: ['^ROOT/'] }],
+    'import/no-unresolved': [2, {
+      ignore: ['^ROOT/']
+    }],
     'no-control-regex': [0]
   }
 }
