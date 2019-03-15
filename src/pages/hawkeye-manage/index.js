@@ -1,17 +1,5 @@
-import dva from 'dva';
-import { createBrowserHistory } from 'history';
-
-import './index.scss';
-
+import app from './app';
 import router from './router';
-
-const history = createBrowserHistory();
-
-// 1. Initialize
-
-const app = dva({
-  history,
-});
 
 // 2. Plugins
 // app.use({});

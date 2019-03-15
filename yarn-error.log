@@ -1,0 +1,52 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add classnames -S
+
+PATH: 
+  C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\乱七八糟\bin;C:\Program Files (x86)\Intel\iCLS Client;C:\Program Files\Intel\iCLS Client;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;D:\vs\QTSystem;C:\Program Files\MySQL\MySQL Server 5.7\bin;D:\vs\Git\cmd;C:\Program Files\Git\cmd;D:\桌面\Microsoft VS Code\bin;C:\WINDOWS\System32\OpenSSH;C:\Program Files\nodejs;C:\Program Files (x86)\Yarn\bin;C:\Users\乱七八糟\AppData\Local\Microsoft\WindowsApps;D:\桌面\Microsoft VS Code\bin;C:\Users\乱七八糟\AppData\Roaming\npm;C:\Users\乱七八糟\AppData\Local\Yarn\bin
+
+Yarn version: 
+  1.13.0
+
+Node version: 
+  10.15.3
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: EPERM: operation not permitted, unlink 'D:\learn\react\hawkeye-center\node_modules\node-sass\vendor\win32-x64-64\binding.node'
+
+npm manifest: 
+  {
+    "private": true,
+    "scripts": {
+      "start": "roadhog server",
+      "build": "roadhog build",
+      "dev": "set COMPRESS=none&&roadhog server"
+    },
+    "dependencies": {
+      "antd": "^3.15.0",
+      "dva": "^2.4.1",
+      "history": "^4.7.2",
+      "react": "^16.2.0",
+      "react-dom": "^16.2.0"
+    },
+    "devDependencies": {
+      "babel-eslint": "^8.2.6",
+      "babel-plugin-dva-hmr": "^0.3.2",
+      "babel-plugin-import": "^1.11.0",
+      "babel-preset-env": "^1.7.0",
+      "eslint": "^4.2.0",
+      "eslint-config-ali": "^2.0.0",
+      "eslint-plugin-babel": "^4.1.1",
+      "husky": "^0.12.0",
+      "redbox-react": "^1.4.3",
+      "roadhog": "^2.0.0"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

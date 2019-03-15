@@ -1,0 +1,33 @@
+.back {
+  display: flex;
+  flex-direction: column;
+  min-height: 280px;
+  height: 100%;
+
+  align-items: center;
+  justify-content: center;
+  .login-logo {
+    margin-top: -100px;
+    margin-bottom: 10px;
+  }
+  .login-card {
+    padding-top: 12px;
+    width: 400px;
+    height: 280px;
+    border-top: 4px solid #336696;
+    border-radius: 4px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, .25);
+
+    .login-form {
+      max-width: 380px;
+    }
+
+    .register-now {
+      float: right;
+    }
+
+    .login-form-button {
+      width: 100%;
+    }
+  }
+}
