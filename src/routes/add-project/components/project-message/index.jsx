@@ -8,7 +8,6 @@ import './index.less';
 const { TextArea } = Input;
 const Option = Select.Option;
 
-
 @Form.create({ name: 'project_message' })
 export default class ProjectMessage extends React.Component {
   handleSubmit = (e) => {

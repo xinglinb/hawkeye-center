@@ -10,6 +10,8 @@ import AddProjectrModel from './models/add-project';
 
 import ProjectMessage from './components/project-message';
 import ProjectSetting from './components/project-setting';
+import AddSdk from './components/add-sdk/';
+import AddFinished from './components/add-finished/';
 
 const Step = Steps.Step;
 
@@ -29,6 +31,10 @@ export default class AddProject extends React.Component {
         current = 0; break;
       case '/addProject/projectSetting':
         current = 1; break;
+      case '/addProject/addSdk':
+        current = 2; break;
+      case '/addProject/addFinished':
+        current = 3; break;
       default: break;
     }
     return (
@@ -46,6 +52,8 @@ export default class AddProject extends React.Component {
               <Switch>
                 <Route path={`${match.url}/projectMessage`} component={ProjectMessage} />
                 <Route path={`${match.url}/projectSetting`} component={ProjectSetting} />
+                <Route path={`${match.url}/addSdk`} component={AddSdk} />
+                <Route path={`${match.url}/addFinished`} component={AddFinished} />
               </Switch>
             </Card>
           </Col>

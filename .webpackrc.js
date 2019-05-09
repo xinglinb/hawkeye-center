@@ -4,6 +4,7 @@ export default {
   // outputPath: '../../node/Hawkeye/app/public',
   entry: {
     index: './src/index.js',
+    sdk: './sdk/index.js',
   },
   alias: {
     ROOT: path.resolve(__dirname, 'src/'),

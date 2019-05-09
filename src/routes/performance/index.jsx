@@ -15,6 +15,10 @@ app.model(performanceModel);
 
 @connect(({ performance }) => ({ performance }))
 export default class Performance extends React.Component {
+  componentDidMount() {
+    // const a = 1;
+    // a.a = 2;
+  }
   render() {
     return (
       <div className="performance">

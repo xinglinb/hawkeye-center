@@ -7,7 +7,7 @@ import './index.less';
 // app.use({});
 
 // 3. Model
-// app.model(require('./models/example').default);
+// app.model(require('./models/example').default);s
 
 // 4. Router
 app.router(router);

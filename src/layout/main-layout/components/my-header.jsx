@@ -29,6 +29,9 @@ export default class MyHeader extends React.Component {
             <Menu.Item key="/errorMoniter">
               <Icon type="warning" />错误报警
             </Menu.Item>
+            <Menu.Item key="/projectSetting">
+              <Icon type="setting" />项目设置
+            </Menu.Item>
           </Menu>
         </div>
         <div className="header-right">
@@ -45,7 +48,7 @@ export default class MyHeader extends React.Component {
             <Option value="lucy">Hawk eye</Option>
           </Select>
 
-          <Button onClick={() => { history.push('/addProject'); }} className="add-button" type="dashed" icon="plus">添加项目</Button>
+          <Button onClick={() => { history.push('/addProject/projectMessage'); }} className="add-button" type="dashed" icon="plus">添加项目</Button>
           <div className="header-avatar">
             <Avatar size="small" src="https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png" />
             <span>Hawk eye</span>

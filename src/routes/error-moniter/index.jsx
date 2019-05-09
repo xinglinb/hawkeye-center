@@ -24,20 +24,21 @@ export default class ErrorMoniter extends React.Component {
     });
   }
   render() {
+    const { history } = this.props;
     return (
       <div className="error-moniter">
         <Row gutter={16}>
           <Col span={8}>
-            <ErrorCard title="all Error" />
+            <ErrorCard history={history} title="all Error" />
           </Col>
           <Col span={8}>
-            <ErrorCard title="api Error" />
+            <ErrorCard history={history} title="api Error" />
           </Col>
           <Col span={8}>
-            <ErrorCard title="effect Error" />
+            <ErrorCard history={history} title="effect Error" />
           </Col>
           <Col span={8} className="moniter-row">
-            <ErrorCard title="component Error" />
+            <ErrorCard history={history} title="component Error" />
           </Col>
           <Col span={8} className="moniter-row">
             <div className="add-moniter" onClick={() => { this.changeModelVisible(); }}>

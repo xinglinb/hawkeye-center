@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card } from 'antd';
+// import { Card } from 'antd';
 import moment from 'moment';
 import {
   Chart,
@@ -11,9 +11,9 @@ import {
 
 import './index.less';
 
-export default class ErrorCard extends React.Component {
+export default class ErrorChart extends React.Component {
   state = {
-    data: [50, 40, 30, 20, 10, 0].map(item => ({
+    data: [110, 100, 90, 80, 70, 60, 50, 40, 30, 20, 10, 0].map(item => ({
       time: moment().subtract(item, 'second').format('HH:mm:ss'),
       errorNum: Math.round(Math.random() * 10) > 3 ? Math.round(Math.random() * 10) : 0,
     })),
@@ -36,14 +36,8 @@ export default class ErrorCard extends React.Component {
     this.setState({ data: newData });
   }
 
-  toDetailHandle = () => {
-    const { title, history } = this.props;
-    history.push(`/errorDetail/${title}`);
-  }
-
   render() {
     const { data } = this.state;
-    const { title } = this.props;
     Animate.registerAnimation('lineUpdate', (updateShape, animateCfg) => {
       const cacheShape = updateShape.get('cacheShape'); // 该动画 shape 的前一个状态
       const cacheAttrs = cacheShape.attrs; // 上一个 shape 属性
@@ -71,35 +65,33 @@ export default class ErrorCard extends React.Component {
 
 
     return (
-      <Card title={title} extra={<a onClick={() => {}}>设置</a>}>
-        <Chart height={254} data={data} padding="auto" forceFit className="errorCard-chart" onClick={this.toDetailHandle}>
-          <Axis
-            name="time"
-            line={{
-              stroke: '#E6E6E6',
-            }}
-          />
-          <Axis name="errorNum" />
-          <Tooltip />
-          <Geom
-            type="line"
-            position="time*errorNum"
-            size={2}
-            color="l (270) 0:#75cd9e .3:#cdced0 1:#fa674a"
-            shape="smooth"
-            style={{
-              shadowColor: 'l (270) 0:rgba(21, 146, 255, 0)',
-              shadowBlur: 60,
-              shadowOffsetY: 6,
-            }}
-            animate={{
-              update: {
-                animation: 'lineUpdate',
-              },
-            }}
-          />
-        </Chart>
-      </Card>
+      <Chart height={254} data={data} padding="auto" forceFit className="errorCard-chart">
+        <Axis
+          name="time"
+          line={{
+            stroke: '#E6E6E6',
+          }}
+        />
+        <Axis name="errorNum" />
+        <Tooltip />
+        <Geom
+          type="line"
+          position="time*errorNum"
+          size={2}
+          color="l (270) 0:#75cd9e .3:#cdced0 1:#fa674a"
+          shape="smooth"
+          style={{
+            shadowColor: 'l (270) 0:rgba(21, 146, 255, 0)',
+            shadowBlur: 60,
+            shadowOffsetY: 6,
+          }}
+          animate={{
+            update: {
+              animation: 'lineUpdate',
+            },
+          }}
+        />
+      </Chart>
     );
   }
 }
