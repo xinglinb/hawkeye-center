@@ -1,11 +1,12 @@
 import React from 'react';
+import { connect } from 'dva';
 import {
   Form, Input, Button, Switch, Icon,
 } from 'antd';
 
 import './index.less';
 
-
+@connect(({ addProject }) => ({ addProject }))
 @Form.create({ name: 'project_message' })
 export default class ProjectMessage extends React.Component {
   handleSubmit = (e) => {
@@ -19,7 +20,9 @@ export default class ProjectMessage extends React.Component {
   }
 
   render() {
-    const { getFieldDecorator } = this.props.form;
+    const { form, addProject } = this.props;
+    const { getFieldDecorator } = form;
+    const { newPid } = addProject.bizData;
 
     const formItemLayout = {
       labelCol: {
@@ -49,7 +52,7 @@ export default class ProjectMessage extends React.Component {
         <Form className="project-setting" {...formItemLayout} onSubmit={this.handleSubmit}>
           <Form.Item label="pid">
             {getFieldDecorator('pid', {
-              initialValue: 'chhdhjsjhbdchjsb',
+              initialValue: newPid,
               rules: [{ required: true }],
             })(
               <Input disabled />

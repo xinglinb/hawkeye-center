@@ -1,42 +1,46 @@
 import React from 'react';
 import { connect } from 'dva';
-import {
-  Form, Input, Select, Button,
-} from 'antd';
+import { Form, Select, Input, Button } from 'antd';
 
 import './index.less';
 
 const { TextArea } = Input;
 const Option = Select.Option;
 
-@connect(({ addProject, login }) => ({ addProject, login }))
-@Form.create({ name: 'project_message' })
-export default class ProjectMessage extends React.Component {
+@connect(({ addProject, projectSetting }) => ({ addProject, projectSetting }))
+@Form.create({ name: 'project_set' })
+export default class ProjectSet extends React.Component {
   componentDidMount() {
     this.props.dispatch({
       type: 'addProject/getUsers',
     });
+    this.props.dispatch({
+      type: 'projectSetting/getOldProjectSetting',
+    });
   }
-
   handleSubmit = (e) => {
+    const { projectSetting } = this.props;
+    const { projectInfo = {} } = projectSetting.bizData;
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
         this.props.dispatch({
-          type: 'addProject/createProject',
-          payload: values,
+          type: 'projectSetting/updateprojectSetting',
+          payload: {
+            ...projectInfo,
+            ...values,
+          },
         });
-        console.log('Received values of form: ', values);
       }
     });
   }
 
   render() {
-    const { form, addProject, login } = this.props;
-
+    const { form, addProject, projectSetting } = this.props;
     const { getFieldDecorator } = form;
     const { users = [] } = addProject.bizData;
-    const { userInfo = {} } = login.bizData;
+    const { projectInfo = {} } = projectSetting.bizData;
+    const { name, e_mail, introduction, members = [] } = projectInfo;
 
     const formItemLayout = {
       labelCol: {
@@ -62,11 +66,12 @@ export default class ProjectMessage extends React.Component {
     };
 
     return (
-      <div>
-        <Form className="project-message" {...formItemLayout} onSubmit={this.handleSubmit}>
+      <div className="project-set">
+        <Form className="setting-form" {...formItemLayout} onSubmit={this.handleSubmit}>
           <Form.Item label="项目名称">
             {getFieldDecorator('name', {
               rules: [{ required: true, message: 'Please input your name!', whitespace: true }],
+              initialValue: name,
             })(
               <Input />
             )}
@@ -79,6 +84,7 @@ export default class ProjectMessage extends React.Component {
               }, {
                 required: true, message: 'Please input your E-mail!',
               }],
+              initialValue: e_mail,
             })(
               <Input />
             )}
@@ -86,7 +92,7 @@ export default class ProjectMessage extends React.Component {
 
           <Form.Item label="项目成员">
             {getFieldDecorator('members', {
-              initialValue: [userInfo.Id || ''],
+              initialValue: members,
             })(
               <Select
                 mode="multiple"
@@ -105,12 +111,13 @@ export default class ProjectMessage extends React.Component {
           <Form.Item label="简介">
             {getFieldDecorator('introduction', {
               rules: [{ required: true }],
+              initialValue: introduction,
             })(
               <TextArea autosize={{ minRows: 3, maxRows: 6 }} />
             )}
           </Form.Item>
           <Form.Item {...tailFormItemLayout}>
-            <Button type="primary" htmlType="submit" onClick={this.handleSubmit}>下一步</Button>
+            <Button type="primary" htmlType="submit" onClick={this.handleSubmit}>提交</Button>
           </Form.Item>
 
         </Form>

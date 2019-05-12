@@ -10,7 +10,10 @@ export default class LoginForm extends React.Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
+        this.props.dispatch({
+          type: 'login/login',
+          payload: values,
+        });
       }
     });
   }
@@ -23,7 +26,7 @@ export default class LoginForm extends React.Component {
         <Card bordered={false} className="login-card">
           <Form onSubmit={this.handleSubmit} className="login-form">
             <Form.Item>
-              {getFieldDecorator('userName', {
+              {getFieldDecorator('username', {
                 rules: [{ required: true, message: 'Please input your username!' }],
               })(
                 <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Username" />
@@ -40,13 +43,13 @@ export default class LoginForm extends React.Component {
               <Button type="primary" htmlType="submit" className="login-form-button">
                 Log in
               </Button>
-              {getFieldDecorator('remember', {
-                valuePropName: 'checked',
-                initialValue: true,
-              })(
-                <Checkbox>Remember me</Checkbox>
-              )}
-              <a href="" className="register-now">register now!</a>
+              <Checkbox>Remember me</Checkbox>
+              <a
+                onClick={() => {
+                  this.props.history.push('/register');
+                }}
+                className="register-now"
+              >register now!</a>
             </Form.Item>
           </Form>
         </Card>

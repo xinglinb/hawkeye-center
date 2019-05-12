@@ -70,21 +70,55 @@ export default class PerformanceDetail extends React.Component {
     ],
   }
   render() {
-    const { data } = this.state;
+    // const { data } = this.state;
+    const { statData } = this.props;
+    const { toDayStatData = {}, allStatData = {} } = statData;
+    const data = [
+      {
+        item: '卸载上个页面',
+        toDayStatData: Number(Number(toDayStatData.avg_unload_prePage).toFixed(4) / 1000),
+        allStatData: Number(Number(allStatData.avg_unload_prePage).toFixed(4) / 1000),
+      },
+      {
+        item: 'dns + tcp的时间',
+        toDayStatData: Number(Number(toDayStatData.avg_dns_tcp).toFixed(4) / 1000),
+        allStatData: Number(Number(allStatData.avg_dns_tcp).toFixed(4) / 1000),
+      },
+      {
+        item: '请求html的时间',
+        toDayStatData: Number(Number(toDayStatData.avg_res_html).toFixed(4) / 1000),
+        allStatData: Number(Number(allStatData.avg_res_html).toFixed(4) / 1000),
+      },
+      {
+        item: '请求js的时间',
+        toDayStatData: Number(Number(toDayStatData.avg_res_js).toFixed(4) / 1000),
+        allStatData: Number(Number(allStatData.avg_res_js).toFixed(4) / 1000),
+      },
+      {
+        item: 'js dom css解析时间',
+        toDayStatData: Number(Number(toDayStatData.avg_parse_resources).toFixed(4) / 1000),
+        allStatData: Number(Number(allStatData.avg_parse_resources).toFixed(4) / 1000),
+      },
+      {
+        item: 'dom 渲染',
+        toDayStatData: Number(Number(toDayStatData.avg_dom_render).toFixed(4) / 1000),
+        allStatData: Number(Number(allStatData.avg_dom_render).toFixed(4) / 1000),
+      },
+    ];
     const dv = new DataView().source(data);
     dv.transform({
       type: 'fold',
-      fields: ['a', 'b'],
+      fields: ['toDayStatData', 'allStatData'],
       // 展开字段集
       key: 'user',
       // key字段
       value: 'score', // value字段
     });
     const cols = {
-      score: {
-        min: 0,
-        max: 80,
-      },
+      // score: {
+      //   min: 0,
+      //   max: 80,
+      // },
     };
 
     return (

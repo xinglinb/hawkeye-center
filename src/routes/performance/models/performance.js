@@ -1,8 +1,11 @@
+import { get } from '../../../utils/request';
+
 export default {
   namespace: 'performance',
   state: {
     bizData: {
-
+      sevenAvgAllTime: [],
+      statData: {},
     },
     uiData: {
       // 页面全局的loading
@@ -18,8 +21,14 @@ export default {
     },
   },
   effects: {
-    * distributeVmData({ payload }, { put }) {
-      yield put({ type: 'content/init', payload });
+    * getPerformanceData(_, { call, put }) {
+      const { data, code } = yield call(get, '/api/getPerformanceData');
+      if (code === 200) {
+        yield put({
+          type: 'updatePerformanceData',
+          payload: data,
+        });
+      }
     },
   },
   reducers: {
@@ -28,6 +37,15 @@ export default {
     },
     hideGlobalLoading(state) {
       return { ...state, isGlobalLoading: false };
+    },
+    updatePerformanceData(state, { payload }) {
+      return {
+        ...state,
+        bizData: {
+          ...state.bizData,
+          ...payload,
+        },
+      };
     },
   },
 };

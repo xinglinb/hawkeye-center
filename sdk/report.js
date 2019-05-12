@@ -2,9 +2,9 @@ import queryString from 'query-string';
 
 export default class Monitor {
   config = {
-    pid: 'jnjnj', // 上报数据的属性名，用于服务器获取数据
-    performanceReportUrl: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
-    errorReportUrl: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
+    pid: 0, // 上报数据的属性名，用于服务器获取数据
+    performanceReportUrl: 'http://127.0.0.1:3001/report/performanceData',
+    errorReportUrl: 'http://127.0.0.1:3001/report/errorData',
     random: 1, // 抽样上报，1~0 之间数值，1为100%上报（默认 1）
     performanceReport: true,
     errorReport: true,
@@ -28,9 +28,17 @@ export default class Monitor {
 
   request = (url, data) => {
     const { pid } = this.config;
+    const navigatorData = {
+      navigator_appVersion: navigator.appVersion, // 浏览器的版本
+      navigator_platform: navigator.platform, // 浏览器所在的系统平台
+      navigator_vendor: navigator.vendor, // 浏览器的品牌
+      navigator_language: navigator.language, // 浏览器的主语言
+    };
     const queryData = {
       pid,
       param: JSON.stringify(data),
+      navigator: JSON.stringify(navigatorData),
+      create_time: +new Date(),
     };
     let imgDom = document.createElement('img');
     imgDom.src = `${url}?${queryString.stringify(queryData)}`;
@@ -44,15 +52,23 @@ export default class Monitor {
 
     window.addEventListener('load', () => {
       const timing = performance.getEntriesByType('navigation')[0];
-      console.log('timing', timing, JSON.parse(JSON.stringify(timing)));
-      console.log('卸载上个页面', timing.fetchStart);
-      console.log('dns + 创建TCP连接的时间', timing.connectEnd - timing.domainLookupStart);
-      console.log('请求资源的时间', timing.responseEnd - timing.connectEnd);
-      console.log('js dom css解析时间', timing.domInteractive - timing.unloadEventEnd);
-      console.log('dom 渲染', timing.domComplete - timing.domInteractive);
-      console.log('页面加载完成的时间', timing.loadEventStart);
+      const resJs = performance.getEntries()
+        .filter(item => item.initiatorType === 'script')
+        .reduce((acc, item) => acc + item.duration, 0);
+
+      const params = {
+        timing: JSON.stringify(timing),
+        unload_prePage: timing.fetchStart, // 卸载上个页面
+        dns_tcp: timing.connectEnd - timing.domainLookupStart, // dns + 创建TCP连接的时间
+        res_html: timing.responseEnd - timing.connectEnd, // 请求html的时间
+        res_js: resJs, // 请求js的时间
+        parse_resources: timing.domInteractive - timing.unloadEventEnd - resJs, // js dom css解析时间
+        dom_render: timing.domComplete - timing.domInteractive, // dom 渲染
+        all_time: timing.loadEventStart, // 页面加载完成的时间
+      };
+
       setTimeout(() => {
-        this.request(performanceReportUrl, timing);
+        this.request(performanceReportUrl, params);
       }, 0);
     });
   }
@@ -60,40 +76,30 @@ export default class Monitor {
   errorReport = (params) => {
     const { errorReportUrl } = this.config;
     setTimeout(() => {
-      this.request(errorReportUrl, {
-        ...params,
-        navigator: {
-          appName: navigator.appName,
-          appVersion: navigator.appVersion,
-          platform: navigator.platform,
-          userAgent: navigator.userAgent,
-          language: navigator.language,
-        },
-      });
+      this.request(errorReportUrl, params);
     }, 0);
   }
 
   allErrorReport = () => {
     window.addEventListener('error', ({ error }) => {
+      const message = error.toString();
+      const stack = this.processStackMsg(error);
       this.errorReport({
-        mid: '1111',
+        mid: 0,
         actionType: 'allError',
-        massage: this.processStackMsg(error),
+        stack,
+        message,
       });
     });
   }
 
   processStackMsg = (error) => {
-    let stack = error.stack
+    const stack = error.stack
       // .replace(/\n/gi, '')
       .split(/\bat\b/)
       .slice(0, 9)
       .join('@')
       .replace(/\?[^:]+/gi, '');
-    const msg = error.toString();
-    if (stack.indexOf(msg) < 0) {
-      stack = `${msg}@${stack}`;
-    }
-    return stack;
+    return `@${stack}`;
   }
 }

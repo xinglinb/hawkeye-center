@@ -1,75 +1,88 @@
 import React from 'react';
-import { Table, Divider, Tag } from 'antd';
+import { Table } from 'antd';
 
 
 import './index.less';
 
 export default class ErrorTable extends React.Component {
   state = {
-    data: [{
-      key: '1',
-      name: 'John Brown',
-      age: 32,
-      address: 'New York No. 1 Lake Park',
-      tags: ['nice', 'developer'],
-    }, {
-      key: '2',
-      name: 'Jim Green',
-      age: 42,
-      address: 'London No. 1 Lake Park',
-      tags: ['loser'],
-    }, {
-      key: '3',
-      name: 'Joe Black',
-      age: 32,
-      address: 'Sidney No. 1 Lake Park',
-      tags: ['cool', 'teacher'],
-    }],
-    columns: [{
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
-      render: text => <a href="javascript:;">{text}</a>,
-    }, {
-      title: 'Age',
-      dataIndex: 'age',
-      key: 'age',
-    }, {
-      title: 'Address',
-      dataIndex: 'address',
-      key: 'address',
-    }, {
-      title: 'Tags',
-      key: 'tags',
-      dataIndex: 'tags',
-      render: tags => (
-        <span>
-          {tags.map((tag) => {
-            let color = tag.length > 5 ? 'geekblue' : 'green';
-            if (tag === 'loser') {
-              color = 'volcano';
-            }
-            return <Tag color={color} key={tag}>{tag.toUpperCase()}</Tag>;
-          })}
-        </span>
-      ),
-    }, {
-      title: 'Action',
-      key: 'action',
-      render: (text, record) => (
-        <span>
-          <a href="javascript:;">Invite {record.name}</a>
-          <Divider type="vertical" />
-          <a href="javascript:;">Delete</a>
-        </span>
-      ),
-    }],
   }
   render() {
-    const { columns, data } = this.state;
+    const { errorDetailData = {} } = this.props;
+    const { errorTypes = {}, errorDetailList = [] } = errorDetailData;
+
+    const columns = [
+      // {
+      //   title: '错误类型',
+      //   dataIndex: 'type_name',
+      //   key: 'type_name',
+      //   width: 70,
+      //   textWrap: 'word-break',
+      //   render: () => errorTypes.type_name,
+      // },
+      {
+        title: errorTypes.param_one,
+        dataIndex: 'param_one',
+        key: 'param_one',
+        fixed: true,
+      },
+      {
+        title: errorTypes.param_two,
+        dataIndex: 'param_two',
+        key: 'param_two',
+        render: text => <p dangerouslySetInnerHTML={{ __html: text.replace(/@/g, '<br />@').replace('<br />', '') }} />,
+      },
+      {
+        title: errorTypes.param_three,
+        dataIndex: 'param_three',
+        key: 'param_three',
+      },
+      {
+        title: errorTypes.param_four,
+        dataIndex: 'param_four',
+        key: 'param_four',
+      },
+      {
+        title: errorTypes.param_five,
+        dataIndex: 'param_five',
+        key: 'param_five',
+      },
+      {
+        title: '报错时间',
+        dataIndex: 'create_time',
+        key: 'create_time',
+        align: 'center',
+        width: 120,
+      },
+      {
+        title: '浏览器版本',
+        dataIndex: 'navigator_appVersion',
+        key: 'navigator_appVersion',
+        width: 200,
+      },
+      {
+        title: '用户电脑',
+        dataIndex: 'navigator_platform',
+        key: 'navigator_platform',
+        width: 100,
+      },
+      {
+        title: '使用语言',
+        dataIndex: 'navigator_language',
+        key: 'navigator_language',
+        width: 100,
+      },
+    ];
+
     return (
       <div className="error-table">
-        <Table columns={columns} dataSource={data} />
+        <Table
+          rowKey="Id"
+          columns={columns}
+          scroll={{ x: 1500 }}
+          dataSource={errorDetailList}
+          pagination={false}
+        />
       </div>
     );
   }

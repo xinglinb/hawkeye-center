@@ -1,8 +1,10 @@
 import React from 'react';
+import { connect } from 'dva';
 import { Icon, Row, Col, Button } from 'antd';
 
 import './index.less';
 
+@connect(({ addProject }) => ({ addProject }))
 export default class AddFinished extends React.Component {
   state = {
     result: [{
@@ -23,8 +25,35 @@ export default class AddFinished extends React.Component {
     }],
   }
   render() {
-    // const { history } = this.props;
-    const { result } = this.state;
+    const { addProject } = this.props;
+    const { newPid, newProject, users } = addProject.bizData;
+    const {
+      name = '',
+      introduction = '',
+      e_mail = '',
+      members = [],
+    } = newProject;
+    let memberStr = '';
+    members.forEach((uid) => {
+      memberStr += `${users.find(({ Id }) => Id === uid).name}, `;
+    });
+    memberStr = memberStr.slice(0, memberStr.length - 2);
+    const result = [{
+      title: 'pid',
+      content: newPid,
+    }, {
+      title: '项目名称',
+      content: name,
+    }, {
+      title: '绑定的邮箱',
+      content: e_mail,
+    }, {
+      title: '项目成员',
+      content: memberStr,
+    }, {
+      title: '简介',
+      content: introduction,
+    }];
     return (
       <div className="add-finished">
         <div className="add-finished-box">
@@ -34,7 +63,7 @@ export default class AddFinished extends React.Component {
         <div className="add-finished-result">
           {
             result.map(item => (
-              <Row gutter={16}>
+              <Row key={item.title} gutter={16}>
                 <Col className="result-title" span={8}>
                   {item.title}:
                 </Col>

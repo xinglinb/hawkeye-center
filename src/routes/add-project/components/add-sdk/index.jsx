@@ -1,14 +1,17 @@
 import React from 'react';
+import { connect } from 'dva';
 import { Button } from 'antd';
 
 import './index.less';
 
+@connect(({ addProject }) => ({ addProject }))
 export default class AddSdk extends React.Component {
   state = {
 
   }
   render() {
-    // const { history } = this.props;
+    const { addProject } = this.props;
+    const { newPid } = addProject.bizData;
     return (
       <div className="add-sdk">
         <div className="add-sdk-box">
@@ -19,7 +22,7 @@ export default class AddSdk extends React.Component {
               {`
 <script type="text/javascript">
   window.hawkEyeConfig = {
-    pid: 'dddddd'
+    pid: ${newPid}
   }
 </script>
 <script type="text/javascript" src="loadxmldoc.js">

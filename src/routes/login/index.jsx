@@ -13,9 +13,10 @@ app.model(loginModel);
 @connect(({ login }) => ({ login }))
 export default class Entry extends React.Component {
   render() {
+    const { dispatch, history } = this.props;
     return (
       <div className="login">
-        <LoginForm />
+        <LoginForm dispatch={dispatch} history={history} />
       </div>
     );
   }

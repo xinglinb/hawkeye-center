@@ -17,7 +17,7 @@ const Step = Steps.Step;
 
 app.model(AddProjectrModel);
 
-@connect(({ AddProject }) => ({ AddProject }))
+@connect(({ addProject }) => ({ addProject }))
 export default class AddProject extends React.Component {
   state = {
     current: 0,

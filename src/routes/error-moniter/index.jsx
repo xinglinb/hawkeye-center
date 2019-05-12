@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'dva';
-import { Row, Col, Icon, Modal } from 'antd';
+import { Row, Col, Icon } from 'antd';
 
 import ErrorCard from './components/error-card/';
 import AddForm from './components/add-form/';
@@ -14,48 +14,48 @@ app.model(errorMoniterModel);
 
 @connect(({ errorMoniter }) => ({ errorMoniter }))
 export default class ErrorMoniter extends React.Component {
-  state = {
-    visible: false,
+  componentDidMount() {
+    this.props.dispatch({
+      type: 'errorMoniter/getErrorMoniterData',
+    });
+    setInterval(() => {
+      this.props.dispatch({
+        type: 'errorMoniter/getErrorMoniterData',
+      });
+    }, 1000 * 60);
   }
 
-  changeModelVisible = () => {
-    this.setState({
-      visible: !this.state.visible,
-    });
-  }
   render() {
-    const { history } = this.props;
+    const { history, dispatch } = this.props;
+    const { errorMoniter } = this.props;
+    const { errorStatData = [] } = errorMoniter.bizData;
+    const { isAddTypeModelVisible } = errorMoniter.uiData;
     return (
       <div className="error-moniter">
         <Row gutter={16}>
-          <Col span={8}>
-            <ErrorCard history={history} title="all Error" />
-          </Col>
-          <Col span={8}>
-            <ErrorCard history={history} title="api Error" />
-          </Col>
-          <Col span={8}>
-            <ErrorCard history={history} title="effect Error" />
-          </Col>
-          <Col span={8} className="moniter-row">
-            <ErrorCard history={history} title="component Error" />
-          </Col>
-          <Col span={8} className="moniter-row">
-            <div className="add-moniter" onClick={() => { this.changeModelVisible(); }}>
+          {
+            errorStatData.map((item, index) => (
+              <Col span={8} key={item.mid} className={index > 2 ? 'moniter-row' : ''}>
+                <ErrorCard history={history} errorStatData={item} dispatch={dispatch} />
+              </Col>
+            ))
+          }
+          <Col span={8} className={errorStatData.length > 2 ? 'moniter-row' : ''}>
+            <div
+              className="add-moniter"
+              onClick={() => {
+                dispatch({
+                  type: 'errorMoniter/showVisible',
+                  payload: 'isAddTypeModelVisible',
+                });
+              }}
+            >
               <Icon type="plus" />
               <p>添加监控项</p>
             </div>
           </Col>
         </Row>
-        <Modal
-          title="添加监控项"
-          okText="确定"
-          visible={this.state.visible}
-          onOk={() => { this.changeModelVisible(); }}
-          onCancel={() => { this.changeModelVisible(); }}
-        >
-          <AddForm />
-        </Modal>
+        <AddForm isAddTypeModelVisible={isAddTypeModelVisible} dispatch={dispatch} />
       </div>
     );
   }

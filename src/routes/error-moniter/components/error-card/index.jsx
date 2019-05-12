@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card } from 'antd';
-import moment from 'moment';
+// import moment from 'moment';
 import {
   Chart,
   Geom,
@@ -13,37 +13,28 @@ import './index.less';
 
 export default class ErrorCard extends React.Component {
   state = {
-    data: [50, 40, 30, 20, 10, 0].map(item => ({
-      time: moment().subtract(item, 'second').format('HH:mm:ss'),
-      errorNum: Math.round(Math.random() * 10) > 3 ? Math.round(Math.random() * 10) : 0,
-    })),
+    // data: [50, 40, 30, 20, 10, 0].map(item => ({
+    //   stat_date: moment().subtract(item, 'second').format('HH:mm:ss'),
+    //   tatol: Math.round(Math.random() * 10) > 3 ? Math.round(Math.random() * 10) : 0,
+    // })),
   }
 
   componentDidMount() {
-    setInterval(() => {
-      this.changeData();
-    }, 10000);
+
   }
 
-  changeData = () => {
-    const { data } = this.state;
-    const newData = [...data];
-    newData.shift();
-    newData.push({
-      time: moment().format('HH:mm:ss'),
-      errorNum: Math.round(Math.random() * 10) > 3 ? Math.round(Math.random() * 10) : 0,
-    });
-    this.setState({ data: newData });
-  }
-
-  toDetailHandle = () => {
-    const { title, history } = this.props;
-    history.push(`/errorDetail/${title}`);
+  toDetailHandle = (mid) => {
+    const { history } = this.props;
+    history.push(`/errorDetail/${mid}`);
   }
 
   render() {
-    const { data } = this.state;
-    const { title } = this.props;
+    const { errorStatData } = this.props;
+    const { type_name, statData, mid } = errorStatData;
+    const data = statData.map(item => ({
+      ...item,
+      stat_date: item.stat_date.split(' ')[1],
+    }));
     Animate.registerAnimation('lineUpdate', (updateShape, animateCfg) => {
       const cacheShape = updateShape.get('cacheShape'); // 该动画 shape 的前一个状态
       const cacheAttrs = cacheShape.attrs; // 上一个 shape 属性
@@ -71,19 +62,28 @@ export default class ErrorCard extends React.Component {
 
 
     return (
-      <Card title={title} extra={<a onClick={() => {}}>设置</a>}>
-        <Chart height={254} data={data} padding="auto" forceFit className="errorCard-chart" onClick={this.toDetailHandle}>
+      <Card title={type_name} extra={<a onClick={() => {}}>设置</a>}>
+        <Chart
+          height={254}
+          data={data}
+          padding="auto"
+          forceFit
+          className="errorCard-chart"
+          onClick={() => {
+            this.toDetailHandle(mid);
+          }}
+        >
           <Axis
-            name="time"
+            name="stat_date"
             line={{
               stroke: '#E6E6E6',
             }}
           />
-          <Axis name="errorNum" />
+          <Axis name="tatol" />
           <Tooltip />
           <Geom
             type="line"
-            position="time*errorNum"
+            position="stat_date*tatol"
             size={2}
             color="l (270) 0:#75cd9e .3:#cdced0 1:#fa674a"
             shape="smooth"

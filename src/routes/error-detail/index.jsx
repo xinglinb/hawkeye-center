@@ -1,32 +1,37 @@
 import React from 'react';
 import { connect } from 'dva';
-import { Card, Row, Col } from 'antd';
+import { Card } from 'antd';
 
 import ErrorChart from './components/error-chart/index';
 import ErrorTable from './components/error-table/';
 
 import './index.less';
 
-import app from '../../app';
-import errorDetailModel from './models/error-detail';
-
-app.model(errorDetailModel);
-
-@connect(({ errorDetail }) => ({ errorDetail }))
+@connect(({ errorMoniter }) => ({ errorMoniter }))
 export default class ErrorDetail extends React.Component {
+  componentDidMount() {
+    // a = 1;
+    const { match, dispatch } = this.props;
+    const { mid } = match.params;
+    dispatch({
+      type: 'errorMoniter/getErrorMoniterDetailData',
+      payload: mid,
+    });
+  }
   render() {
-    const { match } = this.props;
-    return (
-      <div className="error-detail">
-        <Row gutter={16}>
-          <Col span={24}>
-            <Card title={`错误数据详情（${match.params.mid}）`}>
-              <ErrorChart />
+    const { match, errorMoniter } = this.props;
+    const { mid } = match.params;
+    const { errorStatData = [], errorDetailData = {} } = errorMoniter.bizData;
 
-              <ErrorTable />
-            </Card>
-          </Col>
-        </Row>
+    const myErrorStatData = errorStatData.find(item => item.mid === Number(mid));
+
+    return (
+      <div className="error-moniter-detail">
+        <Card title={'错误数据详情'}>
+          <ErrorChart myErrorStatData={myErrorStatData} />
+
+          <ErrorTable errorDetailData={errorDetailData} />
+        </Card>
       </div>
     );
   }

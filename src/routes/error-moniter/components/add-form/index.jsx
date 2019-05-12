@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Form, Input, Slider,
+  Form, Input, Slider, Modal,
 } from 'antd';
 
 import './index.less';
@@ -8,17 +8,21 @@ import './index.less';
 
 @Form.create({ name: 'add_form' })
 export default class LoginForm extends React.Component {
-  handleSubmit = (e) => {
-    e.preventDefault();
+  handleSubmit = () => {
     this.props.form.validateFields((err, values) => {
       if (!err) {
+        this.props.dispatch({
+          type: 'errorMoniter/addErrorType',
+          payload: values,
+        });
         console.log('Received values of form: ', values);
       }
     });
   }
 
   render() {
-    const { getFieldDecorator } = this.props.form;
+    const { isAddTypeModelVisible, form, dispatch } = this.props;
+    const { getFieldDecorator } = form;
 
     const formItemLayout = {
       labelCol: {
@@ -38,21 +42,24 @@ export default class LoginForm extends React.Component {
     };
 
     return (
-      <div>
+      <Modal
+        title="添加监控项"
+        okText="确定"
+        visible={isAddTypeModelVisible}
+        onOk={() => { this.handleSubmit(); }}
+        onCancel={() => {
+          dispatch({
+            type: 'errorMoniter/hideVisible',
+            payload: 'isAddTypeModelVisible',
+          });
+        }}
+      >
         <Form className="add-form" {...formItemLayout} onSubmit={this.handleSubmit}>
           <Form.Item label="监控项名称">
-            {getFieldDecorator('name', {
-              rules: [{ required: true, message: 'Please input your nickname!', whitespace: true }],
+            {getFieldDecorator('type_name', {
+              rules: [{ required: true, message: 'Please input your type_name!', whitespace: true }],
             })(
               <Input />
-            )}
-          </Form.Item>
-          <Form.Item label="mid">
-            {getFieldDecorator('mid', {
-              initialValue: 11,
-              rules: [{ required: true }],
-            })(
-              <Input disabled />
             )}
           </Form.Item>
           <Form.Item label="采样率">
@@ -64,38 +71,45 @@ export default class LoginForm extends React.Component {
           </Form.Item>
 
           <Form.Item label="自定义字段1">
-            {getFieldDecorator('one', {
+            {getFieldDecorator('param_one', {
               initialValue: 'message',
               rules: [{ required: true }],
             })(
-              <Input />
+              <Input disabled />
             )}
           </Form.Item>
 
           <Form.Item label="字段2">
-            {getFieldDecorator('two', {
+            {getFieldDecorator('param_two', {
               initialValue: 'actionType',
             })(
               <Input />
             )}
           </Form.Item>
           <Form.Item label="字段3">
-            {getFieldDecorator('three', {
-              initialValue: 'req',
+            {getFieldDecorator('param_three', {
+              // initialValue: 'req',
             })(
               <Input />
             )}
           </Form.Item>
           <Form.Item label="字段4">
-            {getFieldDecorator('four', {
-              initialValue: 'res',
+            {getFieldDecorator('param_four', {
+              // initialValue: 'res',
+            })(
+              <Input />
+            )}
+          </Form.Item>
+          <Form.Item label="字段5">
+            {getFieldDecorator('param_five', {
+              // initialValue: 'res',
             })(
               <Input />
             )}
           </Form.Item>
 
         </Form>
-      </div>
+      </Modal>
     );
   }
 }
