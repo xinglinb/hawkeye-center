@@ -15,7 +15,7 @@ app.model(projectSettingModel);
 @connect(({ projectSetting }) => ({ projectSetting }))
 export default class ProjectSetting extends React.Component {
   state = {
-    currentSetting: 'project',
+    currentSetting: 'people',
   }
   render() {
     const { currentSetting } = this.state;

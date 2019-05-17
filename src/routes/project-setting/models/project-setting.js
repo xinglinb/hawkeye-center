@@ -37,8 +37,6 @@ export default {
     },
 
     * updateprojectSetting({ payload }, { call, put }) {
-      console.log(payload);
-
       const { code } = yield call(post, 'api/addOrUpdateProject', {
         ...payload,
         members: JSON.stringify(payload.members),

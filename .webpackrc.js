@@ -9,6 +9,7 @@ export default {
   alias: {
     ROOT: path.resolve(__dirname, 'src/'),
   },
+  es5ImcompatibleVersions: true,
   extraBabelPlugins: [
     ["import", {
       "libraryName": "antd",
