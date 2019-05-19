@@ -12,6 +12,8 @@ export default class Register extends React.Component {
     const { dispatch, history } = this.props;
     return (
       <div className="register">
+        <p className="register-title">P2P风险预测系统</p>
+        <p className="register-note">史上最强的P2P平台的风险预测系统</p>
         <RegisterForm dispatch={dispatch} history={history} />
       </div>
     );

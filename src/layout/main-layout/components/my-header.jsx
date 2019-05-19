@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'dva';
-import { Menu, Icon, Select, Avatar, Button, Dropdown } from 'antd';
+import { Menu, Icon, Avatar, Input, Dropdown } from 'antd';
 
 import './index.less';
 
-const Option = Select.Option;
+const Search = Input.Search;
 
 @connect(({ login }) => ({ login }))
 export default class MyHeader extends React.Component {
@@ -13,10 +13,10 @@ export default class MyHeader extends React.Component {
   }
 
   componentDidMount() {
-    const { history = {}, dispatch } = this.props;
-    dispatch({
-      type: 'login/getUserInfo',
-    });
+    const { history = {} } = this.props;
+    // dispatch({
+    //   type: 'login/getUserInfo',
+    // });
     history.listen(({ pathname }) => {
       this.setState({ pathname });
     });
@@ -28,14 +28,13 @@ export default class MyHeader extends React.Component {
     });
   }
   loginout = () => {
-    this.props.dispatch({
-      type: 'login/loginout',
-    });
+    const { history = {} } = this.props;
+    history.push('/login');
   }
   render() {
     const { pathname } = this.state;
     const { login, history } = this.props;
-    const { userInfo = {}, projects = [], pid } = login.bizData;
+    const { userInfo = {} } = login.bizData;
 
     const userMenu = (
       <Menu>
@@ -48,8 +47,8 @@ export default class MyHeader extends React.Component {
     return (
       <div className="header-content">
         <div className="header-left">
-          <i className="iconfont logo">&#xe61d;</i>
-          <p className="logo-title">Hawk eye</p>
+          {/* <i className="iconfont logo">&#xe61d;</i> */}
+          <p className="logo-title">P2P平台的风险预测系统</p>
           <Menu
             theme="light"
             mode="horizontal"
@@ -57,39 +56,30 @@ export default class MyHeader extends React.Component {
             style={{ lineHeight: '64px' }}
             onSelect={({ key }) => { history.push(key); }}
           >
-            <Menu.Item key="/" disabled={!projects.length}>
-              <Icon type="dashboard" />性能监控
+            <Menu.Item key="/">
+              <Icon type="dashboard" />平台基本信息
             </Menu.Item>
-            <Menu.Item key="/errorMoniter" disabled={!projects.length}>
-              <Icon type="warning" />错误报警
+            <Menu.Item key="/1111">
+              <Icon type="dot-chart" />平台风险预测
             </Menu.Item>
-            <Menu.Item key="/projectSetting" disabled={!projects.length}>
-              <Icon type="setting" />项目设置
+            <Menu.Item key="/errorMoniter">
+              <Icon type="warning" />行业风险分析
+            </Menu.Item>
+            <Menu.Item key="/projectSetting">
+              <Icon type="setting" />个人中心
             </Menu.Item>
           </Menu>
         </div>
         <div className="header-right">
-          <Select
-            value={[pid ? Number(pid) : '']}
-            showSearch
-            className="project-select"
-            placeholder="Select a person"
-            optionFilterProp="children"
-            onChange={this.changeProject}
-            filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-          >
-            {
-              projects.map(item => (
-                <Option value={item.id} key={item.id}>{item.name}</Option>
-              ))
-            }
-          </Select>
-
-          <Button onClick={() => { history.push('/addProject/projectMessage'); }} className="add-button" type="dashed" icon="plus">添加项目</Button>
+          <Search
+            placeholder="input search text"
+            onSearch={value => console.log(value)}
+            style={{ width: 200 }}
+          />
 
           <Dropdown overlay={userMenu}>
             <div className="header-avatar">
-              <Avatar size="small" src={userInfo.avatar} />
+              <Avatar size="small" src="https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png" />
               <span>{userInfo.name}</span>
             </div>
           </Dropdown>

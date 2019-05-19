@@ -1,3 +1,70 @@
 .error-moniter-detail {
   width: 100%;
+
+  .detial-header {
+    .detail-title {
+      display: flex;
+
+      align-items: flex-end;
+
+      p {
+        margin-right: 20px;
+        color: #333;
+        font-weight: 400;
+        font-size: 30px;
+        line-height: 40px;
+      }
+    }
+
+    .detail-content {
+      display: flex;
+      margin-top: 20px;
+
+      .content-note {
+        padding: 0 18px;
+        border-right: 1px solid #e4e4e4;
+        text-align: center;
+
+        &:last-child {
+          border-right: 0;
+        }
+
+        &:first-child {
+          padding-left: 0;
+        }
+
+        .content {
+          display: block;
+          color: #333;
+          font-weight: 700;
+          font-size: 18px;
+
+          span {
+            font-weight: 400;
+            font-size: 14px;
+          }
+        }
+
+        .title {
+          color: #999;
+          font-size: 14px;
+        }
+      }
+    }
+  }
+
+  .detial-content {
+    margin-top: 20px;
+    .content-box {
+      .box-title {
+        margin-bottom: 16px;
+        color: rgba(0,0,0,.85);
+        font-weight: 500;
+        font-size: 16px;
+      }
+      .content-item {
+        padding-bottom: 16px;
+      }
+    }
+  }
 }

@@ -27,13 +27,13 @@ export default ({ history }) => (
             <Route path="/errorMoniter" component={ErrorMoniter} />
             <Route path="/addProject" component={AddProject} />
             <Route path="/projectSetting" component={ProjectSetting} />
-            <Route path="/errorDetail/:mid" component={ErrorDetail} />
+            <Route path="/errorDetail" component={ErrorDetail} />
             <Route path="/" exec component={Performance} />
           </Switch>
         </div>
       </Content>
       <Footer style={{ textAlign: 'center' }}>
-          Hawk eye ©2019 Created by xingli
+          P2P平台的风险预测系统©2019 Created by 袁一莉
       </Footer>
     </Layout>
   </div>

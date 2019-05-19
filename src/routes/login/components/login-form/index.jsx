@@ -1,6 +1,5 @@
 import React from 'react';
-import { Card, Form, Icon, Input, Button, Checkbox } from 'antd';
-import Logo from 'ROOT/components/Logo/';
+import { Form, Icon, Input, Button, Checkbox } from 'antd';
 
 import './index.less';
 
@@ -10,10 +9,8 @@ export default class LoginForm extends React.Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        this.props.dispatch({
-          type: 'login/login',
-          payload: values,
-        });
+        console.log(values);
+        this.props.history.push('/');
       }
     });
   }
@@ -21,39 +18,41 @@ export default class LoginForm extends React.Component {
   render() {
     const { getFieldDecorator } = this.props.form;
     return (
-      <div className="back">
-        <Logo className="login-logo" />
-        <Card bordered={false} className="login-card">
-          <Form onSubmit={this.handleSubmit} className="login-form">
-            <Form.Item>
-              {getFieldDecorator('username', {
-                rules: [{ required: true, message: 'Please input your username!' }],
-              })(
-                <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Username" />
-              )}
-            </Form.Item>
-            <Form.Item>
-              {getFieldDecorator('password', {
-                rules: [{ required: true, message: 'Please input your Password!' }],
-              })(
-                <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Password" />
-              )}
-            </Form.Item>
-            <Form.Item >
-              <Button type="primary" htmlType="submit" className="login-form-button">
-                Log in
-              </Button>
-              <Checkbox>Remember me</Checkbox>
-              <a
-                onClick={() => {
-                  this.props.history.push('/register');
-                }}
-                className="register-now"
-              >register now!</a>
-            </Form.Item>
-          </Form>
-        </Card>
-      </div>
+      <Form onSubmit={this.handleSubmit} className="login-form">
+        <Form.Item>
+          {getFieldDecorator('username', {
+            rules: [{ required: true, message: 'Please input your e_mail!' }, {
+              type: 'email', message: 'The input is not valid E-mail!',
+            }],
+          })(
+            <Input size="large" prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Username" />
+          )}
+        </Form.Item>
+        <Form.Item>
+          {getFieldDecorator('password', {
+            rules: [{ required: true, message: 'Please input your Password!' }],
+          })(
+            <Input size="large" prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Password" />
+          )}
+        </Form.Item>
+        <div >
+          <Checkbox>记住密码</Checkbox>
+          <a className="forget" >忘记密码!</a>
+        </div>
+        <div >
+          <Button size="large" type="primary" htmlType="submit" className="login-form-button">
+            登录
+          </Button>
+        </div>
+        <div >
+          <a
+            onClick={() => {
+              this.props.history.push('/register');
+            }}
+            className="register-now"
+          >注册账户!</a>
+        </div>
+      </Form>
     );
   }
 }

@@ -32,10 +32,10 @@ export default class ProjectSetting extends React.Component {
           mode="inline"
         >
           <Menu.Item key="people">
-                  个人设置
+                  用户信息修改
           </Menu.Item>
           <Menu.Item key="project">
-                  项目设置
+                  关注平台管理
           </Menu.Item>
         </Menu>
         {currentSetting === 'people' && <MySetting />}

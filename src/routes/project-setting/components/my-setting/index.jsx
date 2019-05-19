@@ -13,13 +13,13 @@ export default class MySetting extends React.Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        this.props.dispatch({
-          type: 'projectSetting/updateMySetting',
-          payload: {
-            ...userInfo,
-            ...values,
-          },
-        });
+        // this.props.dispatch({
+        //   type: 'projectSetting/updateMySetting',
+        //   payload: {
+        //     ...userInfo,
+        //     ...values,
+        //   },
+        // });
       }
     });
   }
@@ -65,7 +65,7 @@ export default class MySetting extends React.Component {
             </Button>
           </Form.Item>
         </Form>
-        <Avatar className="setting-avatar" size={100} src={userInfo.avatar} />
+        <Avatar className="setting-avatar" size={100} src="https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png" />
       </div>
     );
   }

@@ -1,61 +1,51 @@
 import React from 'react';
-import { connect } from 'dva';
-import { Row, Col, Icon } from 'antd';
+import { Row, Col, Card } from 'antd';
 
-import ErrorCard from './components/error-card/';
-import AddForm from './components/add-form/';
+import One from './components/one';
+import Two from './components/two';
+import Three from './components/three';
+import Four from './components/four';
 
 import './index.less';
 
-import app from '../../app';
-import errorMoniterModel from './models/error-moniter';
-
-app.model(errorMoniterModel);
-
-@connect(({ errorMoniter }) => ({ errorMoniter }))
 export default class ErrorMoniter extends React.Component {
   componentDidMount() {
-    this.props.dispatch({
-      type: 'errorMoniter/getErrorMoniterData',
-    });
-    setInterval(() => {
-      this.props.dispatch({
-        type: 'errorMoniter/getErrorMoniterData',
-      });
-    }, 1000 * 60);
+
   }
 
   render() {
-    const { history, dispatch } = this.props;
-    const { errorMoniter } = this.props;
-    const { errorStatData = [] } = errorMoniter.bizData;
-    const { isAddTypeModelVisible } = errorMoniter.uiData;
     return (
       <div className="error-moniter">
         <Row gutter={16}>
-          {
-            errorStatData.map((item, index) => (
-              <Col span={8} key={item.mid} className={index > 2 ? 'moniter-row' : ''}>
-                <ErrorCard history={history} errorStatData={item} dispatch={dispatch} />
-              </Col>
-            ))
-          }
-          <Col span={8} className={errorStatData.length > 2 ? 'moniter-row' : ''}>
-            <div
-              className="add-moniter"
-              onClick={() => {
-                dispatch({
-                  type: 'errorMoniter/showVisible',
-                  payload: 'isAddTypeModelVisible',
-                });
-              }}
-            >
-              <Icon type="plus" />
-              <p>添加监控项</p>
-            </div>
+          <Col span={16}>
+            <Card className="error-one">
+              <One />
+            </Card>
+          </Col>
+          <Col span={8}>
+            <Card className="error-one">
+              <div className="card-box">
+                <Two />
+              </div>
+            </Card>
           </Col>
         </Row>
-        <AddForm isAddTypeModelVisible={isAddTypeModelVisible} dispatch={dispatch} />
+        <Row gutter={16} style={{ marginTop: 20 }}>
+          <Col span={12}>
+            <Card className="error-one">
+              <div className="card-box">
+                <Three />
+              </div>
+            </Card>
+          </Col>
+          <Col span={12}>
+            <Card className="error-one">
+              <div className="card-box">
+                <Four />
+              </div>
+            </Card>
+          </Col>
+        </Row>
       </div>
     );
   }
