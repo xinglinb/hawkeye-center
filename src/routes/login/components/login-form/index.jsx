@@ -25,7 +25,7 @@ export default class LoginForm extends React.Component {
               type: 'email', message: 'The input is not valid E-mail!',
             }],
           })(
-            <Input size="large" prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Username" />
+            <Input size="large" prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="e_mail" />
           )}
         </Form.Item>
         <Form.Item>

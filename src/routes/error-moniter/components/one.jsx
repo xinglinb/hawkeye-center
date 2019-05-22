@@ -33,7 +33,7 @@ export default class ErrorMoniter extends React.Component {
         option={{
           backgroundColor: '#404a59',
           title: {
-            text: '平台地理分布',
+            text: '问题平台地理分布',
             left: 'center',
             textStyle: {
               color: '#fff',

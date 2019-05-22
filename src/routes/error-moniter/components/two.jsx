@@ -25,18 +25,24 @@ export default class ErrorMoniter extends React.Component {
             },
           },
           tooltip: {},
-          // legend: {
-          //   data: ['预算分配（Allocated Budget）', '实际开销（Actual Spending）'],
-          // },
+          legend: {
+            orient: 'vertical',
+            y: 'bottom',
+            x: 'right',
+            textStyle: {
+              color: '#fff',
+            },
+            data: ['民营', '风投', '上市公司', '银行', '国资'],
+          },
           radar: {
             // shape: 'circle',
             indicator: [
-              { name: '当月投资人数', max: 6500 },
-              { name: '当月借款人数', max: 16000 },
-              { name: '成交', max: 30000 },
-              { name: '运营平台', max: 38000 },
-              { name: '当月问题平台', max: 52000 },
-              { name: '累计问题平台', max: 25000 },
+              { name: '成交' },
+              { name: '运营平台' },
+              { name: '当月问题平台' },
+              { name: '累计问题平台' },
+              { name: '当月投资人数' },
+              { name: '当月借款人数' },
             ],
           },
           series: [{
@@ -45,12 +51,24 @@ export default class ErrorMoniter extends React.Component {
             // areaStyle: {normal: {}},
             data: [
               {
-                value: [4300, 10000, 28000, 35000, 50000, 19000],
-                name: '预算分配（Allocated Budget）',
+                value: [742.92, 2037, 75, 1596, 175.57, 40.03],
+                name: '民营',
               },
               {
-                value: [5000, 14000, 28000, 31000, 42000, 21000],
-                name: '实际开销（Actual Spending）',
+                value: [303.41, 80, 0, 0, 63.2, 16.93],
+                name: '风投',
+              },
+              {
+                value: [222.5, 68, 0, 0, 46.34, 12.42],
+                name: '上市公司',
+              },
+              {
+                value: [126.08, 17, 0, 0, 26.26, 7.04],
+                name: '银行',
+              },
+              {
+                value: [134.81, 76, 2, 2, 28.08, 7.52],
+                name: '国资',
               },
             ],
           }],

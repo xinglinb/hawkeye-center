@@ -31,12 +31,17 @@ export default class MySetting extends React.Component {
     return (
       <div className="my-setting">
         <Form onSubmit={this.handleSubmit} className="setting-form">
+
           <Form.Item>
-            {getFieldDecorator('name', {
-              rules: [{ required: true, message: 'Please input your name!' }],
-              initialValue: userInfo.name,
+            {getFieldDecorator('e_mail', {
+              rules: [{
+                type: 'email', message: 'The input is not valid E-mail!',
+              }, {
+                required: true, message: 'Please input your E-mail!',
+              }],
+              initialValue: userInfo.e_mail,
             })(
-              <Input prefix={<Icon type="smile" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="name" />
+              <Input prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="e_mail" />
             )}
           </Form.Item>
           <Form.Item>
@@ -48,15 +53,11 @@ export default class MySetting extends React.Component {
             )}
           </Form.Item>
           <Form.Item>
-            {getFieldDecorator('e_mail', {
-              rules: [{
-                type: 'email', message: 'The input is not valid E-mail!',
-              }, {
-                required: true, message: 'Please input your E-mail!',
-              }],
-              initialValue: userInfo.e_mail,
+            {getFieldDecorator('name', {
+              rules: [{ required: true, message: 'Please input your name!' }],
+              initialValue: userInfo.name,
             })(
-              <Input prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="e_mail" />
+              <Input prefix={<Icon type="smile" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="phone" />
             )}
           </Form.Item>
           <Form.Item >
