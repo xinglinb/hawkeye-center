@@ -49,7 +49,7 @@ export default class RegisterForm extends React.Component {
         <Form.Item>
           {getFieldDecorator('e_mail', {
             rules: [{
-              required: true, message: 'Please input your E-mail!',
+              required: true, message: '输入手机号！',
             }],
           })(
             <InputGroup compact>
