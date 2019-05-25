@@ -34,7 +34,13 @@ export default class Performance extends React.Component {
         title: '平台',
         dataIndex: 'name',
         key: 'name',
-        render: text => <Link to="/errorDetail">{text}</Link>,
+        render: (text, { one, two, three, four }) => (<Link to={{
+          pathname: '/errorDetail',
+          query: {
+            one, two, three, four,
+          },
+        }}
+        >{text}</Link>),
       },
       {
         title: '成交量',
