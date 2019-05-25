@@ -25,7 +25,7 @@ export default class AddSdk extends React.Component {
     pid: ${newPid}
   }
 </script>
-<script type="text/javascript" src="loadxmldoc.js">
+<script type="text/javascript" src="http://127.0.0.1:3000/sdk.js"></script>
               `}
             </code>
           </pre>

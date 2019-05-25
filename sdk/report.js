@@ -3,8 +3,8 @@ import queryString from 'query-string';
 export default class Monitor {
   config = {
     pid: 0, // 上报数据的属性名，用于服务器获取数据
-    performanceReportUrl: 'http://127.0.0.1:3001/report/performanceData',
-    errorReportUrl: 'http://127.0.0.1:3001/report/errorData',
+    performanceReportUrl: 'http://127.0.0.1:3000/report/performanceData',
+    errorReportUrl: 'http://127.0.0.1:3000/report/errorData',
     random: 1, // 抽样上报，1~0 之间数值，1为100%上报（默认 1）
     performanceReport: true,
     errorReport: true,
