@@ -21,18 +21,18 @@ export default class LoginForm extends React.Component {
       <Form onSubmit={this.handleSubmit} className="login-form">
         <Form.Item>
           {getFieldDecorator('username', {
-            rules: [{ required: true, message: 'Please input your e_mail!' }, {
-              type: 'email', message: 'The input is not valid E-mail!',
+            rules: [{ required: true, message: '输入邮箱' }, {
+              type: 'email', message: '输入正确的邮箱格式',
             }],
           })(
-            <Input size="large" prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="e_mail" />
+            <Input size="large" prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="邮箱" />
           )}
         </Form.Item>
         <Form.Item>
           {getFieldDecorator('password', {
-            rules: [{ required: true, message: 'Please input your Password!' }],
+            rules: [{ required: true, message: '输入密码' }, { min: 6, message: '至少6位密码，区分大小写' }],
           })(
-            <Input size="large" prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Password" />
+            <Input size="large" prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="至少6位密码，区分大小写" />
           )}
         </Form.Item>
         <div >
