@@ -48,7 +48,7 @@ export default class MyHeader extends React.Component {
       <div className="header-content">
         <div className="header-left">
           {/* <i className="iconfont logo">&#xe61d;</i> */}
-          <p className="logo-title">P2P平台的风险预测系统</p>
+          <p className="logo-title">P2P借贷平台的风险预测系统</p>
           <Menu
             theme="light"
             mode="horizontal"
